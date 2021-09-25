@@ -1,5 +1,7 @@
 // All the DOM selectors stored as short variables
 const chat = document.getElementById('chat')
+const inputValue = document.getElementById('name-input')
+const form = document.getElementById('name-form')
 
 // Global variables, if you need any, declared here
 
@@ -8,6 +10,7 @@ const chat = document.getElementById('chat')
 // This function will add a chat bubble in the correct place based on who the sender is
 const showMessage = (message, sender) => {
   if (sender === 'user') {
+    console.log("user is sending")
     chat.innerHTML += `
       <section class="user-msg">
         <div class="bubble user-bubble">
@@ -17,6 +20,7 @@ const showMessage = (message, sender) => {
       </section>
     `
   } else if (sender === 'bot') {
+    console.log("bot is sending")
     chat.innerHTML += `
       <section class="bot-msg">
         <img src="assets/bot.png" alt="Bot" />
@@ -26,8 +30,22 @@ const showMessage = (message, sender) => {
       </section>
     `
   }
+
+
   // This little thing makes the chat scroll to the last message when there are too many to be shown in the chat box
   chat.scrollTop = chat.scrollHeight
+}
+
+const handleNameInput = (event) => {
+  event.preventDefault()
+  console.log('the form is submitted')
+
+  const name = inputValue.value 
+  console.log('the name is:', name)
+
+  showMessage(`Hi, my name is ${name}.`, 'user')
+  inputValue.value = ''
+
 }
 
 // Starts here
@@ -37,6 +55,7 @@ const greeting = () => {
 }
 
 // Set up your eventlisteners here
+form.addEventListener('submit', handleNameInput)
 
 // When website loaded, chatbot asks first question.
 // normally we would invoke a function like this:
